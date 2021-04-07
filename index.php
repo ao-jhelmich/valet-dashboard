@@ -1,10 +1,9 @@
 <?php
 $valet_home_path = getenv('HOME') . '/.config/valet';
 $valet_config = json_decode(file_get_contents("$valet_home_path/config.json"));
-$tld = isset($valet_config->tld) ? $valet_config->tld : $valet_config->domain;
+$tld = 'test';
 $parked_path = $valet_config->paths[0];
-$sites = scandir($parked_path);
-$sites = array_filter($sites, function($site) use ($parked_path) {
+$sites = array_filter(scandir($parked_path), function($site) use ($parked_path) {
     return is_dir("$parked_path/$site") && (file_exists("$parked_path/$site/.env") || file_exists("$parked_path/$site/config.php"));
 });
 ?>
@@ -18,7 +17,7 @@ $sites = array_filter($sites, function($site) use ($parked_path) {
         <div class="flex items-center justify-center" x-data="app()">
             <div class="container">
                 <div class="flex justify-center mb-1">
-                    <h1 class="text-xl text-gray-600">Laravel sites in <?=$parked_path?></h1>
+                    <h1 class="text-xl text-gray-600">Sites in <?=$parked_path?></h1>
                 </div>
 
                 <div class="flex justify-center p-4 mb-2">
@@ -40,7 +39,7 @@ $sites = array_filter($sites, function($site) use ($parked_path) {
                             <template x-for="item in filteredSites" :key="item">
                                 <a class="block p-4 hover:bg-gray-50 cursor-pointer" 
                                     x-bind:href="'http://'+ item + '.<?=$tld?>/'"
-                                    x-bind:target="'valet_' + item" x-text="item">
+                                    x-bind:target="'valet_' + item" x-text="item + '.<?=$tld?>'">
                                 </a>
                             </template>
                         </ul>
