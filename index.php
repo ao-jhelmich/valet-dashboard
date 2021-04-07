@@ -5,7 +5,7 @@ $tld = isset($valet_config->tld) ? $valet_config->tld : $valet_config->domain;
 $parked_path = $valet_config->paths[0];
 $sites = scandir($parked_path);
 $sites = array_filter($sites, function($site) use ($parked_path) {
-    return is_dir("$parked_path/$site") && file_exists("$parked_path/$site/.env");
+    return is_dir("$parked_path/$site") && (file_exists("$parked_path/$site/.env") || file_exists("$parked_path/$site/config.php"));
 });
 ?>
 <html>
@@ -56,7 +56,6 @@ $sites = array_filter($sites, function($site) use ($parked_path) {
                     siteData: Object.values(<?= json_encode($sites) ?>),
                     get filteredSites() {
                         if (this.search === "") {
-                            console.log(this.siteData)
                             return this.siteData;
                         }
 
