@@ -33,7 +33,7 @@ $sites = array_filter(scandir($parked_path), function($site) use ($parked_path) 
                     </div>
                 </div>
 
-                <div class="flex justify-center overflow-scroll">
+                <div class="flex justify-center">
                     <div class="bg-white shadow-xl rounded-lg w-1/2">
                         <ul class="divide-y divide-gray-300">
                             <template x-for="item in filteredSites" :key="item">
